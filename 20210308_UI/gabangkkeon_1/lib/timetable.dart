@@ -47,7 +47,7 @@ class _TimeTableState extends State<TimeTable> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '제발 이대로만',
+            '제발 이대로만가즈아',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
           ),
           Row(
