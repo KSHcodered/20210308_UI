@@ -47,7 +47,7 @@ class _TimeTableState extends State<TimeTable> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '제발 이대로만가즈아',
+            '제발 이대로만가즈아ㅏㅏ',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
           ),
           Row(
@@ -663,70 +663,70 @@ class _TimeTableState extends State<TimeTable> {
       ],
     );
 
-    Widget DSection = Container(
-      //height: MediaQuery.of(context).size.height*0.117,
-      height: 100,
-      // width: double.infinity,
-      decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.only(
-          topRight: Radius.circular(25),
-          topLeft: Radius.circular(25),
-        ),
-        border: Border.all(color: Colors.black),
-        color: Colors.grey[200],
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 5.0,
-            offset: Offset(5.0, 5.0),
-          ),
-        ],
-      ),
-    );
-
-    final BottomIcon = [
-      IconButton(icon: Icon(Icons.home_outlined), onPressed: null),
-      IconButton(icon: Icon(Icons.calendar_view_day), onPressed: null),
-      IconButton(icon: Icon(Icons.dashboard_sharp), onPressed: null),
-      IconButton(icon: Icon(Icons.ballot_outlined), onPressed: null),
-      IconButton(icon: Icon(Icons.people_outline), onPressed: null),
-    ];
-    final BottomTitle = ['홈', '시간표', '게시판', '멘토링', 'MY'];
-
-    Column _buildButtonColumn(IconButton icon, String label) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          IconButton(
-            icon: icon,
-            color: Colors.black,
-            onPressed: null,
-            iconSize: 50,
-          ),
-          Container(
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: Colors.black,
-              ),
-            ),
-          ),
-        ],
-      );
-    }
-
-    Widget buttonSection = Container(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          for (int i = 0; i < 5; i++)
-            _buildButtonColumn(BottomIcon[i], BottomTitle[i])
-        ],
-      ),
-    );
+    // Widget DSection = Container(
+    //   //height: MediaQuery.of(context).size.height*0.117,
+    //   height: 100,
+    //   // width: double.infinity,
+    //   decoration: BoxDecoration(
+    //     shape: BoxShape.rectangle,
+    //     borderRadius: BorderRadius.only(
+    //       topRight: Radius.circular(25),
+    //       topLeft: Radius.circular(25),
+    //     ),
+    //     border: Border.all(color: Colors.black),
+    //     color: Colors.grey[200],
+    //     boxShadow: [
+    //       BoxShadow(
+    //         blurRadius: 5.0,
+    //         offset: Offset(5.0, 5.0),
+    //       ),
+    //     ],
+    //   ),
+    // );
+    //
+    // final BottomIcon = [
+    //   IconButton(icon: Icon(Icons.home_outlined), onPressed: null),
+    //   IconButton(icon: Icon(Icons.calendar_view_day), onPressed: null),
+    //   IconButton(icon: Icon(Icons.dashboard_sharp), onPressed: null),
+    //   IconButton(icon: Icon(Icons.ballot_outlined), onPressed: null),
+    //   IconButton(icon: Icon(Icons.people_outline), onPressed: null),
+    // ];
+    // final BottomTitle = ['홈', '시간표', '게시판', '멘토링', 'MY'];
+    //
+    // Column _buildButtonColumn(IconButton icon, String label) {
+    //   return Column(
+    //     crossAxisAlignment: CrossAxisAlignment.center,
+    //     mainAxisAlignment: MainAxisAlignment.center,
+    //     children: [
+    //       IconButton(
+    //         icon: icon,
+    //         color: Colors.black,
+    //         onPressed: null,
+    //         iconSize: 50,
+    //       ),
+    //       Container(
+    //         child: Text(
+    //           label,
+    //           style: TextStyle(
+    //             fontSize: 12,
+    //             fontWeight: FontWeight.w400,
+    //             color: Colors.black,
+    //           ),
+    //         ),
+    //       ),
+    //     ],
+    //   );
+    // }
+    //
+    // Widget buttonSection = Container(
+    //   child: Row(
+    //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    //     children: [
+    //       for (int i = 0; i < 5; i++)
+    //         _buildButtonColumn(BottomIcon[i], BottomTitle[i])
+    //     ],
+    //   ),
+    // );
 
     return SafeArea(
       child: Scaffold(
