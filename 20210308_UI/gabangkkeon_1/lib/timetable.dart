@@ -47,7 +47,7 @@ class _TimeTableState extends State<TimeTable> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
-            '제발 이대로만가즈아ㅏㅏ',
+            '제발 이대로',
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
           ),
           Row(
@@ -73,7 +73,7 @@ class _TimeTableState extends State<TimeTable> {
     Widget CSection = Stack(
       children: [
         Container(
-          height: 1200,
+          height: 4400,
           margin: EdgeInsets.fromLTRB(28, 0, 28, 0),
           decoration: BoxDecoration(
             shape: BoxShape.rectangle,
