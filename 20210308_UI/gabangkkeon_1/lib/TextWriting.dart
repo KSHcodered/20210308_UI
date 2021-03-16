@@ -6,6 +6,10 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:fdottedline/fdottedline.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:gabangkkeon_1/mobxPractice.dart';
+import 'package:mobx/mobx.dart';
+
 
 class WritingPage extends StatefulWidget {
   @override
@@ -14,17 +18,9 @@ class WritingPage extends StatefulWidget {
 
 class _WritingPageState extends State<WritingPage> {
   FocusNode _focusNode;
-  bool check = true;
-  String inputs = '';
-  int target= 0;
 
-  List<int> items = [];
-  List<TextEditingController> controllers = [
-    for (var i = 1; i < 300; i++) TextEditingController()
-  ];
-  List<int> keys = [
-    for (var i = 1; i < 300; i++) i
-  ];
+  CounterStore  _counter = CounterStore();
+
 
   Widget listViewItem({int index}) {
     // widget layout for listview items
@@ -47,7 +43,7 @@ class _WritingPageState extends State<WritingPage> {
             child: Container(
               child: Text(
                 // 'IMG',
-                'IMG #${keys[index]}',
+                'IMG #${_counter.keys[index]}',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
@@ -70,14 +66,18 @@ class _WritingPageState extends State<WritingPage> {
             child: Column(
               children: [
                 Flexible(
-                  child: TextField(
-                    controller: controllers[index],
-                    maxLines: 20,
-                    textInputAction: TextInputAction.newline,
-                    decoration: const InputDecoration(
-                      hintText: '클릭하여 사진에 설명을 추가해보세요 ',
-                      border: InputBorder.none,
-                    ),
+                  child: Observer(
+                    builder: (context) {
+                      return TextField(
+                        controller: _counter.controllers[index],
+                        maxLines: 20,
+                        textInputAction: TextInputAction.newline,
+                        decoration: const InputDecoration(
+                          hintText: '클릭하여 사진에 설명을 추가해보세요 ',
+                          border: InputBorder.none,
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],
@@ -86,24 +86,25 @@ class _WritingPageState extends State<WritingPage> {
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SizedBox(
-                height: 30,
-                width: 30,
-                child: IconButton(
-                    icon: Icon(Icons.close),
-                    iconSize: 20,
-                    alignment: Alignment.topLeft,
-                    padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
-                    splashColor: Colors.black,
-                    splashRadius: 20,
-                    onPressed: () {
-                      setState(() {
-                        keys.removeAt(index);
-                        items.removeAt(index);
-                        controllers[index].clear();
-                        controllers.removeAt(index);
-                      });
-                    }),
+              Observer(
+                builder: (context) {
+                  return SizedBox(
+                      height: 30,
+                      width: 30,
+                      child: IconButton(
+                        icon: Icon(Icons.close),
+                        iconSize: 20,
+                        alignment: Alignment.topLeft,
+                        padding: EdgeInsets.fromLTRB(5, 5, 0, 0),
+                        splashColor: Colors.black,
+                        splashRadius: 20,
+                        onPressed: () {
+                          print('length: ${_counter.items.length}');
+                          _counter.items = this._counter.items; ////this 너무ㅈ같고
+                          _counter.removeItem(index);
+                        },
+                      ));
+                },
               ),
               Icon(
                 Icons.gamepad,
@@ -120,9 +121,8 @@ class _WritingPageState extends State<WritingPage> {
   void initState() {
     _focusNode = FocusNode();
     _focusNode.addListener(() {
-      if (_focusNode.hasFocus) controllers.clear();
+      if (_focusNode.hasFocus) _counter.controllers.clear();
     });
-
     super.initState();
   }
 
@@ -153,7 +153,11 @@ class _WritingPageState extends State<WritingPage> {
                                 style: TextStyle(
                                     fontSize: 20, color: Colors.white)),
                             color: Colors.black,
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context, new MaterialPageRoute(builder: (_) {
+                                return WritingPage();
+                              }));
+                            },
                           ),
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20)),
@@ -198,15 +202,17 @@ class _WritingPageState extends State<WritingPage> {
                               SizedBox(
                                 height: 24.0,
                                 width: 24.0,
-                                child: Checkbox(
-                                  value: check,
-                                  onChanged: (newValue) {
-                                    setState(() {
-                                      check = newValue;
-                                    });
+                                child: Observer(
+                                  builder: (context) {
+                                    return Checkbox(
+                                      value: _counter.check,
+                                      activeColor: Colors.green,
+                                      onChanged: (bool flag) => _counter.check = flag,
+                                    );
                                   },
-                                ),
+                                )
                               ),
+
                               Text(
                                 '익명의 끈으로 남기기',
                                 textAlign: TextAlign.center,
@@ -241,16 +247,11 @@ class _WritingPageState extends State<WritingPage> {
                                 hintText: '제목을 입력하세요',
                                 border: InputBorder.none,
                               ),
-                              onChanged: (String str) {
-                                setState(() => inputs = str);
-                              },
+                              onChanged: (String str) {_counter.inputs = str;},
                             ),
                             FDottedLine(
                               color: Colors.grey,
-                              width: MediaQuery
-                                  .of(context)
-                                  .size
-                                  .width,
+                              width: MediaQuery.of(context).size.width,
                               strokeWidth: 1.5,
                               dottedLength: 8.0,
                               space: 4.0,
@@ -289,13 +290,19 @@ class _WritingPageState extends State<WritingPage> {
                         ),
                       ), /////////////Record Content
                       Container(
-                        height: min(95 * items.length.toDouble(), 300000),
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: items.length,
-                          itemBuilder: (context, i) {
-                            return listViewItem(index: i); // item layout
+                        // height: min(95 * _counter.items.length.toDouble(), 300000),
+                        child: Observer(
+                          builder: (context) {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              primary: false,
+                              // physics: NeverScrollableScrollPhysics(),
+                              itemCount: _counter.items.length,
+                              itemBuilder: (context, i) {
+                                print('length: ${_counter.items.length}');
+                                return listViewItem(index: i); // item layout
+                              },
+                            );
                           },
                         ),
                       ),
@@ -314,18 +321,19 @@ class _WritingPageState extends State<WritingPage> {
                               width: 130,
                               height: 35,
                               alignment: Alignment.center,
-                              child: FlatButton(
-                                  child: Icon(Icons.add),
-                                  splashColor: Colors.transparent,
-                                  onPressed: () {
-                                    setState(() {
-                                      // add another item to the list
-                                      if (items.length < 10)
-                                        items.add(items.length);
-                                      else
-                                        items.length = 10;
-                                    });
-                                  }),
+                              child:
+                                  FlatButton(
+                                      child: Icon(Icons.add),
+                                      splashColor: Colors.transparent,
+                                      onPressed: () {
+                                        if (_counter.items.length < 10){
+                                          _counter.items.length++;
+                                          _counter.items = this._counter.items;
+                                        }
+                                        else
+                                          _counter.items.length = 10;
+                                      },),
+
                             ),
                           ),
                         ),

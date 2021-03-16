@@ -174,23 +174,36 @@ class _NoticeBoardState extends State<NoticeBoard> {
                           left: MediaQuery.of(context).size.width/2+100,
                           child: RaisedButton(
                             onPressed: (){
-                              _counter.increment();
+                              _counter.func1();
                               },
                             splashColor: Colors.red,
                             color: Colors.greenAccent,
                             child: Icon(Icons.people_outlined),
                             ),
                         ),
-                        Observer(
-                    builder: (context) {
-                      return Text(
-                        '${_counter.counter}',
-                        style: TextStyle(
-                            fontSize: 100, fontWeight: FontWeight.bold),
-                      );
-                    },
-                  ),
-                ],
+                        Column(
+                          children: [
+                            Observer(
+                              builder: (context) {
+                                return Text(
+                                  '${_counter.counter}',
+                                  style: TextStyle(
+                                      fontSize: 100, fontWeight: FontWeight.bold),
+                                );
+                              },
+                            ), //////증가연산
+                            Observer(
+                              builder: (context) {
+                                return Text(
+                                  '${_counter.cc}',
+                                  style: TextStyle(
+                                      fontSize: 100, fontWeight: FontWeight.bold),
+                                );
+                              },
+                            ), //////////////감소연산
+                          ],
+                        ),
+                      ],
                     ),
                   ),
 
