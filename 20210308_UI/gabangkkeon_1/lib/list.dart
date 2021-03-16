@@ -1,6 +1,12 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:gabangkkeon_1/mobxPractice.dart';
+import 'package:mobx/mobx.dart';
+
 
 class NoticeBoard extends StatefulWidget {
   @override
@@ -8,6 +14,9 @@ class NoticeBoard extends StatefulWidget {
 }
 
 class _NoticeBoardState extends State<NoticeBoard> {
+
+  CounterStore  _counter = CounterStore();
+
   @override
   Widget build(BuildContext context) {
     Widget ASection = Container(
@@ -164,13 +173,24 @@ class _NoticeBoardState extends State<NoticeBoard> {
                           bottom: MediaQuery.of(context).size.height/30,
                           left: MediaQuery.of(context).size.width/2+100,
                           child: RaisedButton(
-                            onPressed: () {},
+                            onPressed: (){
+                              _counter.increment();
+                              },
                             splashColor: Colors.red,
                             color: Colors.greenAccent,
                             child: Icon(Icons.people_outlined),
                             ),
                         ),
-                      ]
+                        Observer(
+                    builder: (context) {
+                      return Text(
+                        '${_counter.counter}',
+                        style: TextStyle(
+                            fontSize: 100, fontWeight: FontWeight.bold),
+                      );
+                    },
+                  ),
+                ],
                     ),
                   ),
 
