@@ -163,12 +163,11 @@ class _NoticeBoardState extends State<NoticeBoard> {
                         Positioned(
                           bottom: MediaQuery.of(context).size.height/30,
                           left: MediaQuery.of(context).size.width/2+100,
-
-                          child: IconButton(
+                          child: RaisedButton(
                             onPressed: () {},
+                            splashColor: Colors.red,
                             color: Colors.greenAccent,
-                            icon: Icon(Icons.people_outline_outlined),
-                            iconSize: 77,
+                            child: Icon(Icons.people_outlined),
                             ),
                         ),
                       ]
