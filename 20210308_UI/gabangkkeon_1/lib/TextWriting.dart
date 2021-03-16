@@ -17,10 +17,15 @@ class _WritingPageState extends State<WritingPage> {
   FocusNode _focusNode;
   bool check = true;
   String inputs = '';
+  int target= 0;
 
   List<int> items = [];
   List<TextEditingController> controllers = [
     for (var i = 1; i < 11; i++) TextEditingController()
+  ];
+  // List<int> keys = [1,2, 3, 4, 5, 6, 7, 8, 9, 10];
+  List<int> keys = [
+    for (var i = 1; i < 200; i++) i
   ];
 
   Widget listViewItem({int index}) {
@@ -43,7 +48,7 @@ class _WritingPageState extends State<WritingPage> {
                 borderRadius: BorderRadius.circular(10)),
             child: Container(
               child: Text(
-                'IMG',
+                'IMG #${keys[index]}',
                 textAlign: TextAlign.center,
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
@@ -94,6 +99,7 @@ class _WritingPageState extends State<WritingPage> {
                     splashRadius: 20,
                     onPressed: () {
                       setState(() {
+                        keys.removeAt(index);
                         items.removeAt(index);
                         controllers[index].clear();
                         controllers.removeAt(index);
